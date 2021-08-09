@@ -1,0 +1,40 @@
+/* FONTS */
+/* 
+  DANCING SCRIPT - 600
+  RUBIK - 300, 400
+*/
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Rubik:wght@300;400;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body,
+html {
+  min-height: 100vh;
+  font-family: Rubik, sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--font-dark);
+  background-color: var(--bg-light);
+  transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Dancing Script', sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  html,
+  body {
+    color: var(--font-light);
+    background-color: var(--bg-dark);
+  }
+}
