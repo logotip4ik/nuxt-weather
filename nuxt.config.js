@@ -3,20 +3,41 @@ export default {
   privateRuntimeConfig: {
     apiKey: process.env.OPEN_WEATHER_API,
   },
+
+  publicRuntimeConfig: {
+    currentWeather: (cityName, apiKey) =>
+      `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${apiKey}`,
+    hourlyWeather: (cityName, apiKey) =>
+      `https://api.openweathermap.org/data/2.5/forecast/hourly?q=${cityName}&units=metric&appid=${apiKey}`,
+    dailyWeather: (cityName, apiKey) =>
+      `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=${apiKey}`,
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'forecast',
+    title: 'Forecast',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Weather forecast in your browser, fast and reliable',
+      },
       { name: 'format-detection', content: 'telephone=no' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: [
+    '~/assets/css/base.css',
+    '~/assets/css/variables.scss',
+    '~/assets/css/button.scss',
+  ],
+  loading: {
+    height: '4px',
+    color: 'var(--secondary-color-600)',
+  },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
