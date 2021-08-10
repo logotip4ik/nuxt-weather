@@ -1,5 +1,6 @@
 <template>
   <section class="section">
+    <div class="section__bg" :style="{ backgroundImage }"></div>
     <header class="section__header">
       <h2 class="section__header__place"><slot name="place"></slot></h2>
       <h1 class="section__header__temp"><slot></slot></h1>
@@ -10,9 +11,29 @@
 </template>
 
 <script>
+import { blendHexColors } from '~/helpers/psbc'
+
 export default {
   props: {
     mainTemp: { type: Number, required: true, default: 21 },
+  },
+  data: () => ({
+    cold: '#88FFF7',
+    warm: '#FA1E0E',
+  }),
+  computed: {
+    backgroundImage() {
+      const MIDDLE_TEMP = 19
+      const shade = this.mainTemp / (MIDDLE_TEMP * 2)
+
+      const mainColor = blendHexColors(this.cold, this.warm, shade)
+
+      const topColor = `${mainColor}90` //
+      const midColor = `${mainColor}70` // Last two digits is alpha
+      const botColor = `${mainColor}00` //
+
+      return `linear-gradient(to bottom, ${topColor}, ${midColor}, ${botColor})`
+    },
   },
 }
 </script>
@@ -22,6 +43,18 @@ export default {
   display: flex;
   flex-direction: column;
   padding: 15vh 5vw 0;
+  position: relative;
+  z-index: 1;
+
+  &__bg {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70vh;
+    z-index: -1;
+  }
 
   &__header {
     * {

@@ -22,8 +22,9 @@
       <template #sunset>
         {{ currentWeather.sys.sunset | normalizeDateTime }}
       </template> -->
-    <pre>
-      {{ JSON.stringify(currentWeather, null, 2) }}
+    <pre v-if="data">
+      <!-- {{ JSON.stringify(Object.keys(data.daily[0]), null, 2) }} -->
+      {{ data.daily[0].dt | normalizeDateTime }}
     </pre>
   </div>
 </template>
@@ -38,16 +39,19 @@ export default {
       if (typeof time !== 'number') return '12:00'
 
       return Intl.DateTimeFormat('ua', {
-        hour12: true,
-        hour: '2-digit',
-        minute: '2-digit',
-      }).format(new Date(time))
+        hourCycle: 'h23',
+        hour12: false,
+        timeStyle: 'short',
+        dateStyle: 'short',
+      }).format(new Date(time * 1000))
     },
   },
   async asyncData({ params, $axios, $config }) {
     const { name } = params
     if (!process.server) {
-      location.pathname = `city/${name}`
+      const url = `city/${name}`
+      history.pushState(null, null, url)
+      location.pathname = url
       return
     }
 
