@@ -28,7 +28,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Dancing Script', sans-serif;
+  /* font-family: 'Dancing Script', sans-serif; */
 }
 
 @media (prefers-color-scheme: dark) {
