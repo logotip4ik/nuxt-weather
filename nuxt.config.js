@@ -1,16 +1,14 @@
 export default {
+  target: 'server',
   ssr: true,
   privateRuntimeConfig: {
     apiKey: process.env.OPEN_WEATHER_API,
   },
 
   publicRuntimeConfig: {
-    currentWeather: (cityName, apiKey) =>
-      `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${apiKey}`,
-    hourlyWeather: (cityName, apiKey) =>
-      `https://api.openweathermap.org/data/2.5/forecast/hourly?q=${cityName}&units=metric&appid=${apiKey}`,
-    dailyWeather: (cityName, apiKey) =>
-      `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=${apiKey}`,
+    baseUrl: 'https://api.openweathermap.org/data/2.5',
+    currentWeather: `/weather?units=metric`,
+    oneCallWeather: `/onecall?exclude=current&units=metric`,
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -60,7 +58,13 @@ export default {
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    headers: {
+      common: {
+        'Cache-Control': 'max-age: 600',
+      },
+    },
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
