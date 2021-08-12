@@ -7,6 +7,7 @@
       <h3 class="section__header__desc"><slot name="desc"></slot></h3>
       <h4 class="section__header__min-max"><slot name="min-max"></slot></h4>
     </header>
+    <span class="section__current-time">{{ currentTime }}</span>
   </section>
 </template>
 
@@ -16,6 +17,9 @@ export default {
     mainTemp: { type: Number, required: true, default: 21 },
     mainColor: { type: String, required: true, default: '' },
   },
+  data: () => ({
+    currentTime: '',
+  }),
   computed: {
     backgroundImage() {
       const topColor = `${this.mainColor}90` //
@@ -24,6 +28,20 @@ export default {
 
       return `linear-gradient(to bottom, ${topColor}, ${midColor}, ${botColor})`
     },
+  },
+  mounted() {
+    this.currentTime = Intl.DateTimeFormat('ua', {
+      hourCycle: 'h23',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(new Date())
+    setInterval(() => {
+      this.currentTime = Intl.DateTimeFormat('ua', {
+        hourCycle: 'h23',
+        hour: '2-digit',
+        minute: '2-digit',
+      }).format(new Date())
+    }, 50)
   },
 }
 </script>
@@ -67,6 +85,16 @@ export default {
       line-height: 1.25;
       font-size: 1.85rem;
     }
+  }
+  &__current-time {
+    position: absolute;
+    top: 10%;
+    right: 5vw;
+    transform: transalte(-50%, -50%);
+    background-color: hsla(0, 0%, 50%, 50%);
+    color: var(--font-light);
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;
   }
 }
 </style>
