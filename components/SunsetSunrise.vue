@@ -62,7 +62,9 @@ export default {
 <style lang="scss" scoped>
 .main {
   padding: 5vh 5vw 0;
-  width: 100%;
+  margin: 0 auto;
+  width: 95vw;
+  // max-width: 900px;
   // outline: 1px solid red;
 
   display: flex;
