@@ -11,26 +11,16 @@
 </template>
 
 <script>
-import { blendHexColors } from '~/helpers/psbc'
-
 export default {
   props: {
     mainTemp: { type: Number, required: true, default: 21 },
+    mainColor: { type: String, required: true, default: '' },
   },
-  data: () => ({
-    cold: '#88FFF7',
-    warm: '#FA1E0E',
-  }),
   computed: {
     backgroundImage() {
-      const MIDDLE_TEMP = 19
-      const shade = this.mainTemp / (MIDDLE_TEMP * 2)
-
-      const mainColor = blendHexColors(this.cold, this.warm, shade)
-
-      const topColor = `${mainColor}90` //
-      const midColor = `${mainColor}70` // Last two digits is alpha
-      const botColor = `${mainColor}00` //
+      const topColor = `${this.mainColor}90` //
+      const midColor = `${this.mainColor}70` // Last two digits is alpha
+      const botColor = `${this.mainColor}00` //
 
       return `linear-gradient(to bottom, ${topColor}, ${midColor}, ${botColor})`
     },
@@ -42,7 +32,7 @@ export default {
 .section {
   display: flex;
   flex-direction: column;
-  padding: 15vh 5vw 0;
+  padding: 15vh 5vw 15vh;
   position: relative;
   z-index: 1;
 
