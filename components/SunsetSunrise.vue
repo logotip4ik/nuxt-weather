@@ -3,8 +3,11 @@
     <span class="main__sunrise"><slot name="sunrise"></slot></span>
     <div class="main__line" :style="{ backgroundColor }">
       <span
-        class="main__line__current"
-        :style="{ backgroundColor, left: sunPosition }"
+        :class="{
+          main__line__current: true,
+          'main__line__current--bottom': sunPosition > 97 || sunPosition < 3,
+        }"
+        :style="{ backgroundColor, left: `${sunPosition}%` }"
       ></span>
     </div>
     <span class="main__sunset"><slot name="sunset"></slot></span>
@@ -52,8 +55,7 @@ export default {
       const deltaB = now - this.sunrise * 1000
       const left = deltaB / deltaA
       const leftNormalized = left < 0 ? 0 : left > 1 ? 1 : left
-      const leftFormated = `${leftNormalized * 100}%`
-      return leftFormated
+      return leftNormalized * 100
     },
   },
 }
@@ -99,6 +101,10 @@ export default {
         transform: translate(-50%, 0);
 
         font-size: 0.8rem;
+      }
+      &--bottom::after {
+        top: unset;
+        bottom: 110% !important;
       }
     }
   }
