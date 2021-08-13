@@ -108,6 +108,9 @@ export default {
     const description = this.currentWeather.weather[0].description
     const temp = `${this.currentWeather.main.temp.toFixed(1)}°C`
     const { pop } = this.data.daily[0]
+    const { icon } = this.data.daily[0].weather[0]
+
+    console.log(icon)
 
     let message = 'Go ahead, and discover world around you!'
     if (pop > 0.25 && pop < 0.5)
@@ -147,6 +150,12 @@ export default {
           name: 'og:title',
           property: 'og:title',
           content: `${this.name} - Forecast`,
+        },
+        {
+          hid: 'og:image',
+          name: 'og:image',
+          property: 'og:image',
+          content: `https://openweathermap.org/img/wn/${icon}@4x.png`,
         },
         {
           hid: 'apple-mobile-web-app-title',
