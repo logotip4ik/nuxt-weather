@@ -75,7 +75,7 @@ export default {
       return
     }
 
-    const http = $axios.create({
+    const http = await $axios.create({
       baseURL: $config.baseUrl,
       headers: {
         common: {
@@ -106,7 +106,7 @@ export default {
   }),
   head() {
     const description = this.currentWeather.weather[0].description
-    const temp = `${this.currentWeather.main.temp}°C`
+    const temp = `${this.currentWeather.main.temp.toFixed(1)}°C`
     const { pop } = this.data.daily[0]
 
     let message = 'Go ahead, and discover world around you!'
@@ -131,6 +131,27 @@ export default {
           }": ${description} - ${temp}, chance of precipitation: ${
             pop * 100
           }%. ${message}`,
+        },
+        {
+          hid: 'og:description',
+          name: 'og:description',
+          property: 'og:description',
+          content: `Currently in "${
+            this.name
+          }": ${description} - ${temp}, chance of precipitation: ${
+            pop * 100
+          }%. ${message}`,
+        },
+        {
+          hid: 'og:title',
+          name: 'og:title',
+          property: 'og:title',
+          content: `${this.name} - Forecast`,
+        },
+        {
+          hid: 'apple-mobile-web-app-title',
+          name: 'apple-mobile-web-app-title',
+          content: `${this.name} - Forecast`,
         },
       ],
     }
