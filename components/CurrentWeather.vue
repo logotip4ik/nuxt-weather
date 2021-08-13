@@ -36,11 +36,12 @@ export default {
       minute: '2-digit',
     }).format(new Date())
     setInterval(() => {
-      this.currentTime = Intl.DateTimeFormat('ua', {
+      const newCurrentTime = Intl.DateTimeFormat('ua', {
         hourCycle: 'h23',
         hour: '2-digit',
         minute: '2-digit',
       }).format(new Date())
+      if (newCurrentTime !== this.currentTime) this.currentTime = newCurrentTime
     }, 50)
   },
 }
@@ -95,6 +96,7 @@ export default {
     color: var(--font-light);
     padding: 0.25rem 0.75rem;
     border-radius: 0.25rem;
+    font-size: 1.1rem;
   }
 }
 </style>
