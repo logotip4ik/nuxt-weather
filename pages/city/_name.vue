@@ -35,18 +35,7 @@
     <ForecastList :data="data.daily.slice(1, -1)" display-day>
       Daily Forecast:
     </ForecastList>
-    <!-- <HourlyForecast :data="data.hourly"></HourlyForecast>
-    <DailyForecast :data="data.daily"></DailyForecast> -->
-    <!-- <template #sunrise>
-        {{ currentWeather.sys.sunrise | normalizeDateTime }}
-      </template>
-      <template #sunset>
-        {{ currentWeather.sys.sunset | normalizeDateTime }}
-      </template> -->
-    <!-- <pre v-if="data">
-      {{ JSON.stringify(Object.keys(data.daily[0]), null, 2) }} 
-      {{ JSON.stringify(Object.keys(data.hourly[0]), null, 2) }} 
-    </pre> -->
+    <Footer :main-color="mainColor"></Footer>
   </div>
 </template>
 
@@ -115,6 +104,37 @@ export default {
   data: () => ({
     primaryColor: '',
   }),
+  head() {
+    const description = this.currentWeather.weather[0].description
+    const temp = `${this.currentWeather.main.temp}°C`
+    const { pop } = this.data.daily[0]
+
+    let message = 'Go ahead, and discover world around you!'
+    if (pop > 0.25 && pop < 0.5)
+      message =
+        'Go ahead, but be aware, it could posibly rain a bit ¯\\_(ツ)_/¯'
+    if (pop > 0.5 && pop < 0.75)
+      message =
+        'Try to stay at home, becouse it will rain, posibly, idk ¯\\_(ツ)_/¯'
+    if (pop > 0.75)
+      message =
+        'Stay at home or find a shelter, becouse i have no doubt it will rain'
+
+    return {
+      title: `${this.name} - Forecast`,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: `Currently in "${
+            this.name
+          }": ${description} - ${temp}, chance of precipitation: ${
+            pop * 100
+          }%. ${message}`,
+        },
+      ],
+    }
+  },
 }
 </script>
 
