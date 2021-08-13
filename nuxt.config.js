@@ -8,7 +8,7 @@ export default {
   publicRuntimeConfig: {
     baseUrl: 'https://api.openweathermap.org/data/2.5',
     currentWeather: `/weather?units=metric`,
-    oneCallWeather: `/onecall?exclude=current&units=metric`,
+    oneCallWeather: `/onecall?exclude=current,minutely&units=metric`,
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
