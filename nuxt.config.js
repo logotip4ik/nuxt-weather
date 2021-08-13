@@ -4,7 +4,6 @@ export default {
   privateRuntimeConfig: {
     apiKey: process.env.OPEN_WEATHER_API,
   },
-
   publicRuntimeConfig: {
     baseUrl: 'https://api.openweathermap.org/data/2.5',
     currentWeather: `/weather?units=metric`,
@@ -20,6 +19,23 @@ export default {
         hid: 'description',
         name: 'description',
         content: 'Weather forecast in your browser, fast and reliable',
+      },
+      {
+        hid: 'og:description',
+        name: 'og:description',
+        property: 'og:description',
+        content: 'Weather forecast in your browser, fast and reliable',
+      },
+      {
+        hid: 'og:title',
+        name: 'og:title',
+        property: 'og:title',
+        content: `Forecast`,
+      },
+      {
+        hid: 'apple-mobile-web-app-title',
+        name: 'apple-mobile-web-app-title',
+        content: `Forecast`,
       },
       { name: 'format-detection', content: 'telephone=no' },
     ],
