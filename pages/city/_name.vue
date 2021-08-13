@@ -31,16 +31,16 @@
         currentWeather.sys.sunset | normalizeTime
       }}</template>
     </SunsetSunrise>
+    <HourlyForecast :data="data.hourly"></HourlyForecast>
     <!-- <template #sunrise>
         {{ currentWeather.sys.sunrise | normalizeDateTime }}
       </template>
       <template #sunset>
         {{ currentWeather.sys.sunset | normalizeDateTime }}
       </template> -->
-    <!-- <pre v-if="data">
-      {{ JSON.stringify(Object.keys(data.daily[0]), null, 2) }} 
-      {{ data.daily[0].dt | normalizeDateTime }}
-    </pre> -->
+    <pre v-if="data">
+      {{ JSON.stringify(Object.keys(data), null, 2) }} 
+    </pre>
   </div>
 </template>
 
