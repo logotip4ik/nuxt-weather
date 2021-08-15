@@ -166,7 +166,7 @@ export default {
       }
 
       @media (prefers-color-scheme: dark) {
-        --surface-color: hsla(0, 0%, 0%, 11%);
+        --surface-color: hsla(0, 0%, 100%, 10%);
       }
     }
   }
