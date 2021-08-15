@@ -11,7 +11,7 @@
 
   border: 1px solid transparent;
   border-radius: 0.25rem;
-  background-color: var(--primary-color-500);
+  background-color: var(--secondary-color-600);
   padding: 0.35rem 0.85rem;
 
   cursor: pointer;
@@ -24,19 +24,19 @@
   &:hover,
   &:focus {
     transition: none;
-    background-color: var(--primary-color-300);
+    background-color: var(--secondary-color-300);
     // color: var(--font-light);
   }
 
   &--outlined {
-    background-color: var(--primary-color-transparent-500);
-    border-color: var(--primary-color-200);
+    background-color: var(--secondary-color-transparent-500);
+    border-color: var(--secondary-color-200);
     color: currentColor;
 
     &:hover,
     &:focus {
-      border-color: var(--primary-color-600);
-      background-color: var(--primary-color-transparent-200);
+      border-color: var(--secondary-color-600);
+      background-color: var(--secondary-color-transparent-200);
     }
   }
 }

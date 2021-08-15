@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <h1 class="main__header">
-      Weather <span style="color: var(--primary-color-600)">Forecast</span>
+      Weather <span style="color: var(--secondary-color-600)">Forecast</span>
     </h1>
     <form
       class="main__form"
