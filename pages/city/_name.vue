@@ -110,8 +110,6 @@ export default {
     const { pop } = this.data.daily[0]
     const { icon } = this.data.daily[0].weather[0]
 
-    console.log(icon)
-
     let message = 'Go ahead, and discover world around you!'
     if (pop > 0.25 && pop < 0.5)
       message =
