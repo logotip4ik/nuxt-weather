@@ -105,6 +105,7 @@ export default {
     primaryColor: '',
   }),
   head() {
+    if (!this.currentWeather) return { title: 'Forecast' }
     const description = this.currentWeather.weather[0].description
     const temp = `${this.currentWeather.main.temp.toFixed(1)}°C`
     const { pop } = this.data.daily[0]
