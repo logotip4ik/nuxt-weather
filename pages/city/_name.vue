@@ -66,7 +66,7 @@ export default {
       }).format(new Date(time * 1000))
     },
   },
-  async asyncData({ params, $axios, $config }) {
+  async asyncData({ params, $axios, $config, error }) {
     const { name } = params
     if (!process.server) {
       const url = `city/${name}`
@@ -84,9 +84,16 @@ export default {
       },
     })
 
-    const currentWeather = await http.$get(
-      `${$config.currentWeather}&q=${name}&appid=${$config.apiKey}`
-    )
+    let currentWeather
+
+    try {
+      currentWeather = await http.$get(
+        `${$config.currentWeather}&q=${name}&appid=${$config.apiKey}`
+      )
+    } catch (err) {
+      return error(err.message)
+    }
+
     const data = await http.$get(
       `${$config.oneCallWeather}&lat=${currentWeather.coord.lat}&lon=${currentWeather.coord.lon}&appid=${$config.apiKey}`
     )
