@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import slugify from 'voca/slugify'
+
 export default {
   data: () => ({
     cityName: '',
@@ -38,7 +40,7 @@ export default {
       this.$nuxt.$loading.start()
       this.$router.push({
         name: 'city-name',
-        params: { name: this.cityName.trim().toLowerCase() },
+        params: { name: slugify(this.cityName) },
       })
     },
     resetForm() {

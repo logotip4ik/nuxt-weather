@@ -67,9 +67,11 @@ export default {
     },
   },
   async asyncData({ params, $axios, $config, error }) {
-    const { name } = params
+    const { name: slugifiedName } = params
+    const name = slugifiedName.replace('-', ' ')
+
     if (!process.server) {
-      const url = `city/${name}`
+      const url = `city/${slugifiedName}`
       history.pushState(null, null, url)
       location.pathname = url
       return
