@@ -1,29 +1,31 @@
 <template>
-  <div class="main">
-    <h1 class="main__header">
-      Weather <span style="color: var(--secondary-color-600)">Forecast</span>
-    </h1>
-    <form
-      class="main__form"
-      @submit.prevent="submitForm"
-      @reset.prevent="resetForm"
-    >
-      <label for="city" class="main__form__label">Your city is</label>
-      <input
-        id="city"
-        ref="input"
-        v-model="cityName"
-        type="text"
-        class="main__form__input"
-        autofocus="autofocus"
-        autocomplete="off"
-        @keypress.enter.prevent="submitForm"
-      />
-      <div class="main__form__actions">
-        <button class="button" type="submit">Search</button>
-        <button class="button button--outlined" type="reset">Reset</button>
-      </div>
-    </form>
+  <div class="main--wrapper">
+    <div class="main">
+      <h1 class="main__header">
+        Weather <span style="color: var(--secondary-color-600)">Forecast</span>
+      </h1>
+      <form
+        class="main__form"
+        @submit.prevent="submitForm"
+        @reset.prevent="resetForm"
+      >
+        <label for="city" class="main__form__label">Your city is</label>
+        <input
+          id="city"
+          ref="input"
+          v-model="cityName"
+          type="text"
+          class="main__form__input"
+          autofocus="autofocus"
+          autocomplete="off"
+          @keypress.enter.prevent="submitForm"
+        />
+        <div class="main__form__actions">
+          <button class="button" type="submit">Search</button>
+          <button class="button button--outlined" type="reset">Reset</button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -53,11 +55,6 @@ export default {
 
 <style lang="scss">
 .main {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
   width: 98vw;
   max-width: 600px;
   text-align: center;
@@ -81,6 +78,15 @@ export default {
   align-items: center;
   flex-grow: 1;
   gap: 1.5rem;
+
+  &--wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    min-height: 100vh;
+  }
 
   &__header {
     font-size: 2.5rem;
