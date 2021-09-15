@@ -26,6 +26,20 @@
         </div>
       </form>
     </div>
+    <div class="toggle">
+      <VueToggles
+        name="toggle"
+        height="30"
+        width="60"
+        checked-bg="var(--secondary-color-600)"
+        :value="autoDetermin"
+        @click="autoDetermin = !autoDetermin"
+      ></VueToggles>
+      <label for="toggle" class="toggle__label">
+        Auto determine <br />
+        the city
+      </label>
+    </div>
   </div>
 </template>
 
@@ -33,10 +47,37 @@
 import slugify from 'voca/slugify'
 
 export default {
+  async asyncData({ app, req, $axios, error, redirect }) {
+    if (!process.server) return
+    const autoDetermin = app.$cookies.get('__forecast_auto_determine') || false
+    const ip = req.connection.remoteAddress || req.socket.remoteAddress
+
+    if (!ip || !autoDetermin) return { autoDetermin }
+
+    const data = await $axios
+      .$get(`http://ip-api.com/json/${ip}`)
+      .catch((err) => error(err.message))
+
+    if (data.status === 'success')
+      return redirect(`/city/${slugify(data.city)}`)
+
+    return { autoDetermin }
+  },
   data: () => ({
     cityName: '',
   }),
+  watch: {
+    autoDetermin(val) {
+      this.$cookies.set('__forecast_auto_determine', val, {
+        maxAge: 60 * 60 * 24 * 7, // 7 days
+        sameSite: 'lax',
+      })
+    },
+  },
   methods: {
+    toggleAutoDetermine(val) {
+      this.autoDetermin = val
+    },
     submitForm() {
       if (!this.cityName) return
       this.$nuxt.$loading.start()
@@ -143,6 +184,27 @@ export default {
       align-items: center;
       gap: 1rem;
     }
+  }
+}
+.toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5rem;
+
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+
+  &__label {
+    color: whitesmoke;
+    font: inherit;
+    font-size: 0.8rem;
+
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    background-color: rgba($color: #333, $alpha: 0.9);
   }
 }
 </style>
