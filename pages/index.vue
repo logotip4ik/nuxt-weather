@@ -48,10 +48,12 @@ import slugify from 'voca/slugify'
 
 export default {
   async asyncData({ app, req, $axios, error, redirect }) {
-    if (!process.server) return
     const autoDetermin = app.$cookies.get('__forecast_auto_determine') || false
+    if (!process.server) return { autoDetermin }
     const headers = req && req.headers ? Object.assign({}, req.headers) : {}
-    const xRealIp = headers['x-real-ip'].split(',')[0].trim()
+    const xRealIp = headers['x-real-ip']
+      ? headers['x-real-ip'].split(',')[0].trim()
+      : null
 
     if (!xRealIp || !autoDetermin) return { autoDetermin }
 
@@ -94,7 +96,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .main {
   width: 98vw;
   max-width: 600px;
