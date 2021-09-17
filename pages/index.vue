@@ -50,18 +50,18 @@ export default {
   async asyncData({ app, req, $axios, error, redirect }) {
     if (!process.server) return
     const autoDetermin = app.$cookies.get('__forecast_auto_determine') || false
-    const ip = req.connection.remoteAddress || req.socket.remoteAddress
+    const headers = req && req.headers ? Object.assign({}, req.headers) : {}
+    const xRealIp = headers['x-real-ip'].split(',')[0].trim()
 
-    if (!ip || !autoDetermin) return { autoDetermin }
+    if (!xRealIp || !autoDetermin) return { autoDetermin }
 
-    const data = await $axios
-      .$get(`http://ip-api.com/json/${ip}`)
+    const city = await $axios
+      .$get(`https://ipapi.co/${xRealIp}/city`)
       .catch((err) => error(err.message))
 
-    if (data.status === 'success')
-      return redirect(`/city/${slugify(data.city)}`)
+    if (city) return redirect(`/city/${slugify(city)}`)
 
-    return { autoDetermin }
+    return { autoDetermin, city, xRealIp }
   },
   data: () => ({
     cityName: '',
