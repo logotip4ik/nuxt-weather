@@ -46,6 +46,8 @@
 <script>
 import slugify from 'voca/slugify'
 
+const WEEK_IN_MILLISECONDS = 60 * 60 * 24 * 7 * 1000
+
 export default {
   async asyncData({ app, req, $axios, error, redirect }) {
     const autoDetermin = app.$cookies.get('__forecast_auto_determine') || false
@@ -56,6 +58,11 @@ export default {
       : null
 
     if (!xRealIp || !autoDetermin) return { autoDetermin }
+
+    app.$cookies.set('__forecast_auto_determine', autoDetermin, {
+      exexpires: new Date(new Date().getTime() + WEEK_IN_MILLISECONDS),
+      sameSite: 'lax',
+    })
 
     const city = await $axios
       .$get(`https://ipapi.co/${xRealIp}/city`)
@@ -71,7 +78,7 @@ export default {
   watch: {
     autoDetermin(val) {
       this.$cookies.set('__forecast_auto_determine', val, {
-        maxAge: 60 * 60 * 24 * 7, // 7 days
+        exexpires: new Date(new Date().getTime() + WEEK_IN_MILLISECONDS),
         sameSite: 'lax',
       })
     },
